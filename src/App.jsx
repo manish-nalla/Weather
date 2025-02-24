@@ -49,24 +49,28 @@ const App = () => {
             </div>
             <div className='flex flex-col items-center p-2 m-2'>
               <div className='flex flex-col items-center p-2 m-2'>
-                <h1 className='font-bold text-3xl p-1'>{data.name}, {data.sys ? data.sys.country : ' '}</h1>
+                <h1 className='font-bold text-3xl p-1'>{data.name} {data.sys ? data.sys.country : ' '}</h1>
                 {data.main ? <p className='p-2 m-2 text-xl font-bold'><span>{convertUnit(data.main.temp)}<sup>°{unit === 'F' ? 'F' : 'C'}</sup></span><button onClick={() => setUnit(unit === 'F' ? 'C' : 'F')} className='cursor-pointer'>/{unit === 'F' ? 'C' : 'F'}</button></p> : ''}
                 {data.weather ? <p className='text-xl font-bold  pb-1'>{data.weather[0].main}</p> : ''}
               </div>
-              <div className='flex flex-row justify-around w-100 border-0 p-4 rounded-xl shadow-2xl text-xl font-medium'>
-                <div className='flex flex-col items-center'>
-                  <h3>Humidity</h3>
-                  {data.main ? <p>{data.main.humidity}</p> : ''}
+              {data.name != undefined &&
+                <div className='flex flex-row justify-around w-100 border-0 p-4 rounded-xl shadow-2xl text-xl font-medium'>
+                  <div className='flex flex-col items-center'>
+                    <h3>Humidity</h3>
+                    {data.main ? <p>{data.main.humidity}</p> : ''}
+                  </div>
+                  <div className='flex flex-col items-center'>
+                    <h3>Feels like</h3>
+                    {data.main ? <p>{convertUnit(data.main.feels_like)}<button onClick={() => setUnit(unit === 'F' ? 'C' : 'F')}>/{unit === 'F' ? 'C' : 'F'}</button></p> : ''}
+                  </div>
+                  <div className='flex flex-col items-center'>
+                    <h3>Wind</h3>
+                    {data.wind ? <p>{data.wind.speed} mph</p> : ''}
+                  </div>
                 </div>
-                <div className='flex flex-col items-center'>
-                  <h3>Feels like</h3>
-                  {data.main ? <p>{convertUnit(data.main.feels_like)}<button onClick={() => setUnit(unit === 'F' ? 'C' : 'F')}>/{unit === 'F' ? 'C' : 'F'}</button></p> : ''}
-                </div>
-                <div className='flex flex-col items-center'>
-                  <h3>Wind</h3>
-                  {data.wind ? <p>{data.wind.speed} mph</p> : ''}
-                </div>
-              </div>
+
+              }
+
             </div>
           </div>
         </div>
